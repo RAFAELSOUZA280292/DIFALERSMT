@@ -1,0 +1,51 @@
+import streamlit as st
+
+# Tabela de alíquotas interestaduais para o MT
+aliquotas_icms = {
+    'AC': 12, 'AL': 12, 'AP': 12, 'AM': 12, 'BA': 12, 'CE': 12, 'DF': 12,
+    'ES': 12, 'GO': 12, 'MA': 12, 'MS': 12, 'MG': 7, 'PA': 12, 'PB': 12,
+    'PR': 7, 'PE': 12, 'PI': 12, 'RJ': 7, 'RN': 12, 'RS': 7, 'RO': 12,
+    'RR': 12, 'SC': 7, 'SP': 7, 'SE': 12, 'TO': 12
+}
+
+ufs = list(aliquotas_icms.keys())
+
+st.set_page_config(page_title="Calculadora DIFAL - MT", layout="centered")
+st.title("Calculadora de ICMS DIFAL para o Estado de Mato Grosso")
+
+st.markdown("Preencha os dados abaixo para calcular o ICMS DIFAL (Diferencial de Alíquota) a ser recolhido:")
+
+# Entrada do valor da compra
+valor_compra = st.number_input("Valor Total da Compra (R$)", min_value=0.0, format="%.2f")
+
+# Seleção da UF de origem
+uf_origem = st.selectbox("UF de Origem da Mercadoria", options=ufs)
+
+# Simulação de item com conteúdo importado (4%)
+conteudo_importado = st.checkbox("Item com conteúdo de importação superior a 40% (alíquota de 4%)")
+
+# Botão para calcular
+if st.button("Calcular DIFAL"):
+    if valor_compra <= 0:
+        st.warning("Informe um valor de compra válido.")
+    else:
+        aliquota_interna_mt = 17.0
+        if conteudo_importado:
+            aliquota_interestadual = 4.0
+        else:
+            aliquota_interestadual = aliquotas_icms.get(uf_origem, 12)
+
+        base_calculo = valor_compra / (1 - (aliquota_interna_mt / 100))
+        icms_interno = base_calculo * (aliquota_interna_mt / 100)
+        icms_origem = base_calculo * (aliquota_interestadual / 100)
+        difal = icms_interno - icms_origem
+
+        custo_total = valor_compra + difal
+
+        st.success(f"ICMS DIFAL a recolher: R$ {difal:,.2f}")
+
+        st.markdown(f"Seu item custou **R$ {valor_compra:,.2f}**, terá **R$ {difal:,.2f}** de DIFAL, totalizando **R$ {custo_total:,.2f}**.")
+
+        st.markdown("---")
+        st.markdown(
+            f"### Comparativo Estratégico:\n\nSe no mercado interno de MT você encontrar o mesmo item por até **R$ {custo_total:,.2f}**, vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL.")
