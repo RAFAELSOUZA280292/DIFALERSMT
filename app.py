@@ -42,10 +42,13 @@ if st.button("Calcular DIFAL"):
 
         custo_total = valor_compra + difal
 
-        st.success(f"ICMS DIFAL a recolher: R$ {difal:,.2f}")
+        st.success(f"ICMS DIFAL a recolher: R$ {difal:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
-        st.markdown(f"Seu item custou **R$ {valor_compra:,.2f}**, terá **R$ {difal:,.2f}** de DIFAL, totalizando **R$ {custo_total:,.2f}**.")
+        st.markdown(
+            f"Seu item custou **R$ {valor_compra:,.2f}**, terá **R$ {difal:,.2f}** de DIFAL, totalizando **R$ {custo_total:,.2f}**."
+            .replace(",", "X").replace(".", ",").replace("X", "."))
 
         st.markdown("---")
         st.markdown(
-            f"### Comparativo Estratégico:\n\nSe no mercado interno de MT você encontrar o mesmo item por até **R$ {custo_total:,.2f}**, vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL.")
+            f"### Comparativo Estratégico:\n\nSe no mercado interno de MT você encontrar o mesmo item por até **R$ {custo_total:,.2f}**, vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL."
+            .replace(",", "X").replace(".", ",").replace("X", "."))
