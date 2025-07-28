@@ -48,8 +48,12 @@ if st.button("Calcular DIFAL"):
         st.success(f"ICMS DIFAL a recolher: {format_brl(difal)}")
 
         st.markdown(
-            f"Seu item custou **{format_brl(valor_compra)}**, terá **{format_brl(difal)}** de DIFAL, totalizando **{format_brl(custo_total)}**.")
+            f"### Resultado Detalhado\n\n"
+            f"Você comprou um item por {format_brl(valor_compra)}.\n\n"
+            f"Como a operação é interestadual, será necessário recolher {format_brl(difal)} de ICMS DIFAL ao Estado de Mato Grosso.\n\n"
+            f"Portanto, o **custo total efetivo** do item será de {format_brl(custo_total)}."
+        )
 
         st.markdown("---")
         st.markdown(
-            f"### Comparativo Estratégico:\n\nSe no mercado interno de MT você encontrar o mesmo item por até **{format_brl(custo_total)}**, vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL.")
+            f"### Comparativo Estratégico\n\nSe no mercado interno de MT você encontrar o mesmo item por até {format_brl(custo_total)}, vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL.")
