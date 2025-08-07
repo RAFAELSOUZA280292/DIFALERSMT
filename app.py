@@ -1,17 +1,17 @@
 import streamlit as st
 
-# Tabela de alíquotas interestaduais com destino ao MT (corrigida)
-aliquotas_icms = {
+# Alíquotas interestaduais com destino ao MT, conforme tabela oficial
+aliquotas_icms_mt = {
     'AC': 12, 'AL': 12, 'AM': 12, 'AP': 12, 'BA': 12, 'CE': 12, 'DF': 12,
-    'ES': 12, 'GO': 12, 'MA': 12, 'MG': 7, 'MS': 12, 'PA': 12, 'PB': 12,
-    'PR': 12, 'PE': 12, 'PI': 12, 'RJ': 12, 'RN': 12, 'RO': 12,
-    'RR': 12, 'SC': 12, 'SP': 12, 'SE': 12, 'TO': 12
+    'ES': 12, 'GO': 12, 'MA': 12, 'MS': 12, 'MG': 12, 'PA': 12, 'PB': 12,
+    'PR': 12, 'PE': 12, 'PI': 12, 'RJ': 12, 'RN': 12, 'RO': 12, 'RR': 12,
+    'RS': 12, 'SC': 12, 'SP': 12, 'SE': 12, 'TO': 12
 }
 
-ufs = list(aliquotas_icms.keys())
+ufs = list(aliquotas_icms_mt.keys())
 
 st.set_page_config(page_title="Calculadora DIFAL - MT", layout="centered")
-st.title("Calculadora de ICMS DIFAL para o Estado de Mato Grosso")
+st.title("Simulador de ICMS DIFAL para o Estado de Mato Grosso")
 
 st.markdown("Preencha os dados abaixo para calcular o ICMS DIFAL (Diferencial de Alíquota) a ser recolhido:")
 
@@ -33,18 +33,12 @@ if st.button("Calcular DIFAL"):
         if conteudo_importado:
             aliquota_interestadual = 4.0
         else:
-            aliquota_interestadual = aliquotas_icms.get(uf_origem, 12)
+            aliquota_interestadual = aliquotas_icms_mt.get(uf_origem, 12)
 
-        # Base por dentro
-        base_calculo_difal = valor_compra / (1 - (aliquota_interna_mt / 100))
-
-        # ICMS Interno (por dentro)
-        icms_interno = base_calculo_difal * (aliquota_interna_mt / 100)
-
-        # ICMS de Origem (por fora)
-        icms_origem = valor_compra * (aliquota_interestadual / 100)
-
-        # DIFAL
+        # Cálculo com base POR DENTRO
+        base_calculo = valor_compra / (1 - (aliquota_interna_mt / 100))
+        icms_interno = base_calculo * (aliquota_interna_mt / 100)
+        icms_origem = base_calculo * (aliquota_interestadual / 100)
         difal = icms_interno - icms_origem
 
         custo_total = valor_compra + difal
@@ -63,4 +57,6 @@ if st.button("Calcular DIFAL"):
 
         st.markdown("---")
         st.markdown(
-            f"### Comparativo Estratégico\n\nSe no mercado interno de MT você encontrar o mesmo item por até {format_brl(custo_total)}, vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL.")
+            f"### Comparativo Estratégico\n\n"
+            f"Se no mercado interno de MT você encontrar o mesmo item por até {format_brl(custo_total)}, vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL."
+        )
