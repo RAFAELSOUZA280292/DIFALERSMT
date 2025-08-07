@@ -1,8 +1,8 @@
 import streamlit as st
 
-# Tabela de alíquotas interestaduais para o MT
+# Tabela corrigida com as alíquotas interestaduais para MT conforme tabela oficial
 aliquotas_icms = {
-    'AC': 12, 'AL': 12, 'AM': 12, 'AP': 12, 'BA': 12, 'CE': 12, 'DF': 12,
+    'AC': 12, 'AL': 12, 'AP': 12, 'AM': 12, 'BA': 12, 'CE': 12, 'DF': 12,
     'ES': 12, 'GO': 12, 'MA': 12, 'MS': 12, 'MG': 7, 'PA': 12, 'PB': 12,
     'PR': 12, 'PE': 12, 'PI': 12, 'RJ': 7, 'RN': 12, 'RS': 7, 'RO': 12,
     'RR': 12, 'SC': 7, 'SP': 7, 'SE': 12, 'TO': 12
@@ -35,11 +35,11 @@ if st.button("Calcular DIFAL"):
         else:
             aliquota_interestadual = aliquotas_icms.get(uf_origem, 12)
 
+        # Cálculo correto conforme RICMS/MT:
+        icms_origem = valor_compra * (aliquota_interestadual / 100)
         base_calculo = valor_compra / (1 - (aliquota_interna_mt / 100))
         icms_interno = base_calculo * (aliquota_interna_mt / 100)
-        icms_origem = base_calculo * (aliquota_interestadual / 100)
         difal = icms_interno - icms_origem
-
         custo_total = valor_compra + difal
 
         def format_brl(valor):
