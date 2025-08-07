@@ -2,9 +2,9 @@ import streamlit as st
 
 # Tabela de alíquotas interestaduais para o MT
 aliquotas_icms = {
-    'AC': 12, 'AL': 12, 'AP': 12, 'AM': 12, 'BA': 12, 'CE': 12, 'DF': 12,
+    'AC': 12, 'AL': 12, 'AM': 12, 'AP': 12, 'BA': 12, 'CE': 12, 'DF': 12,
     'ES': 12, 'GO': 12, 'MA': 12, 'MS': 12, 'MG': 7, 'PA': 12, 'PB': 12,
-    'PR': 7, 'PE': 12, 'PI': 12, 'RJ': 7, 'RN': 12, 'RS': 7, 'RO': 12,
+    'PR': 12, 'PE': 12, 'PI': 12, 'RJ': 7, 'RN': 12, 'RS': 7, 'RO': 12,
     'RR': 12, 'SC': 7, 'SP': 7, 'SE': 12, 'TO': 12
 }
 
