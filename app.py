@@ -4,7 +4,7 @@ import streamlit as st
 aliquotas_icms = {
     'AC': 12, 'AL': 12, 'AM': 12, 'AP': 12, 'BA': 12, 'CE': 12, 'DF': 12,
     'ES': 12, 'GO': 12, 'MA': 12, 'MG': 7,  'MS': 12, 'PA': 12, 'PB': 12,
-    'PR': 12, 'PE': 12, 'PI': 12, 'RJ': 7,  'RN': 12, 'RO': 12, 'RR': 12,
+    'PR': 7, 'PE': 12, 'PI': 12, 'RJ': 7,  'RN': 12, 'RO': 12, 'RR': 12,
     'RS': 7,  'SC': 7,  'SP': 7,  'SE': 12, 'TO': 12
 }
 
@@ -63,3 +63,4 @@ if st.button("Calcular DIFAL"):
             f"### Comparativo Estratégico\n\nSe no mercado interno de MT você encontrar o mesmo item por até {format_brl(custo_total)}, "
             f"vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL."
         )
+
