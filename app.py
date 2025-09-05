@@ -35,14 +35,13 @@ if st.button("Calcular DIFAL"):
         else:
             aliquota_interestadual = aliquotas_icms.get(uf_origem, 12)
 
-        # Base de cálculo POR DENTRO para o ICMS interno (RICMS-MT)
-        base_calculo = valor_compra / (1 - (aliquota_interna_mt / 100))
+        # Cálculo oficial (base dupla - art. 96 §1º RICMS-MT)
+        icms_origem = valor_compra * (aliquota_interestadual / 100)  # imposto na origem
+        valor_liquido = valor_compra - icms_origem                   # sem ICMS origem
+        base_calculo = valor_liquido / (1 - (aliquota_interna_mt / 100))  # base por dentro
+        icms_interno = base_calculo * (aliquota_interna_mt / 100)    # ICMS devido em MT
 
-        # Cálculo do ICMS interno e interestadual
-        icms_interno = base_calculo * (aliquota_interna_mt / 100)
-        icms_origem = valor_compra * (aliquota_interestadual / 100)
-
-        # Cálculo do DIFAL
+        # DIFAL é a diferença
         difal = icms_interno - icms_origem
         custo_total = valor_compra + difal
 
@@ -63,4 +62,3 @@ if st.button("Calcular DIFAL"):
             f"### Comparativo Estratégico\n\nSe no mercado interno de MT você encontrar o mesmo item por até {format_brl(custo_total)}, "
             f"vale mais a pena comprar **dentro do estado** para evitar o recolhimento do DIFAL."
         )
-
